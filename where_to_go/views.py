@@ -70,7 +70,7 @@ def post_detail(request, id):
         place = Place.objects.get(id=id)
     except Place.DoesNotExist:
         raise Http404("No MyModel matches the given query.")
-    print(place.images.all()[4].image.url)
+
     response = {
         "title": place.title,
         "imgs": [image.image.url for image in place.images.all()],

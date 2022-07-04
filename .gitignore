@@ -4,3 +4,4 @@
 /static/places
 *env
 __pycache__
+*.pyc
