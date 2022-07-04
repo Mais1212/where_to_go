@@ -16,7 +16,6 @@ class Place(models.Model):
     )
     latitude = models.FloatField(verbose_name="Широта")
     longitude = models.FloatField(verbose_name="Долгота")
-    place_id = models.CharField(max_length=200, verbose_name="id")
     order = models.PositiveSmallIntegerField(
         default=0,
         blank=False,

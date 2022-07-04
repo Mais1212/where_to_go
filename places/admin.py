@@ -32,4 +32,4 @@ class ImageInline(SortableInlineAdminMixin, admin.StackedInline):
 @admin.register(Place)
 class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [ImageInline]
-    list_display = ["title", "place_id",]
+    list_display = ["title", ]

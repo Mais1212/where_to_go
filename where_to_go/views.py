@@ -8,7 +8,7 @@ from places.models import Place
 
 
 def append_json_local(geo_json):
-    folder_path = f"{os.path.join(settings.BASE_DIR, 'static')}/places/"
+    folder_path = f"{settings.STATICFILES_DIRS[0]}/places/"
     fiels = os.listdir(folder_path)
 
     for file in fiels:
@@ -44,8 +44,8 @@ def append_json_db(geo_json):
             },
             "properties": {
                 "title": place.title,
-                "placeId": place.title,
-                "detailsUrl": f"places/{place.place_id}"
+                "placeId": place.id,
+                "detailsUrl": f"places/{place.id}"
             }
         })
 
@@ -67,10 +67,10 @@ def show_maps(request):
 
 def post_detail(request, id):
     try:
-        place = Place.objects.get(place_id=id)
+        place = Place.objects.get(id=id)
     except Place.DoesNotExist:
         raise Http404("No MyModel matches the given query.")
-
+    print(place.images.all()[4].image.url)
     response = {
         "title": place.title,
         "imgs": [image.image.url for image in place.images.all()],

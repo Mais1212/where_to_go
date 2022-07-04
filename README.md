@@ -1,6 +1,6 @@
 # Карта Москвы
 
-Карта с местами для посещения в Москве.
+Карта с местами для посещения в Москве. [Пример](http://mais111.pythonanywhere.com/) сайта.
 
 ## Как запустить ?
 
@@ -28,4 +28,10 @@ python3 manage.py runserver
 - `SECRET_KEY` — секретный ключ проекта. Например: `erofheronoirenfoernfx49389f43xf3984xf9384`.
 - `ALLOWED_HOSTS` — [Что такое ALLOWED_HOSTS](https://docs.djangoproject.com/en/4.0/ref/settings/#std:setting-ALLOWED_HOSTS).
 
-****
+## Management commands
+
+- `load_place` позволяет записать данные из json в базу данных. Принимает на вход url json'a. Пример работы команды :
+
+```bash
+python manage.py load_place http://адрес/файла.json
+```
