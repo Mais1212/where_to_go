@@ -15,7 +15,7 @@ pip install -r requirements.txt
 - Запустить сервер:
 
 ```console
-python3 manage.py runserver
+python manage.py runserver
 ```
 
 ## Переменные окружения
@@ -32,6 +32,6 @@ python3 manage.py runserver
 
 - `load_place` позволяет записать данные из json в базу данных. Принимает на вход url json'a. Пример работы команды :
 
-```bash
+```console
 python manage.py load_place http://адрес/файла.json
 ```
