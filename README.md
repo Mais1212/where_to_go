@@ -35,3 +35,21 @@ python manage.py runserver
 ```console
 python manage.py load_place http://адрес/файла.json
 ```
+
+Json в ссылке должен иметь такой вид:
+
+```json
+{
+    "title": "title",
+    "imgs": [
+        "https://...jpg",
+
+    ],
+    "description_short": "description short",
+    "description_long": "<p>description long</p>",
+    "coordinates": {
+        "lng": "00.00",
+        "lat": "00.00"
+    }
+}
+```
