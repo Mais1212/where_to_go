@@ -3,3 +3,4 @@
 /media/
 /static/places
 *env
+__pycache__
