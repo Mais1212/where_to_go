@@ -8,7 +8,7 @@ from places.models import Place
 
 
 def append_json_local(geo_json):
-    folder_path = f"{settings.STATICFILES_DIRS[0]}/places/"
+    folder_path = os.path.join("static_src", "places\\")
     fiels = os.listdir(folder_path)
 
     for file in fiels:
