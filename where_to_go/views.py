@@ -1,9 +1,10 @@
 import json
 import os
 
-from django.conf import settings
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
+from django.templatetags.static import static
+from django.urls import reverse
 from places.models import Place
 
 
@@ -15,6 +16,7 @@ def append_json_local(geo_json):
         file_path = f"{folder_path}{file}"
         with open(file_path, "r", encoding="utf-8") as file:
             file = json.load(file)
+            file_id = f"{file['title']}.json"
 
             geo_json["features"].append({
                 "type": "Feature",
@@ -25,7 +27,7 @@ def append_json_local(geo_json):
                 "properties": {
                     "title": file["title"],
                     "placeId": file["title"],
-                    "detailsUrl": f"{settings.STATIC_URL}places/{file['title']}.json"
+                    "detailsUrl": static(reverse("places", args=(file_id, )))
                 }
             })
 
@@ -45,7 +47,7 @@ def append_json_db(geo_json):
             "properties": {
                 "title": place.title,
                 "placeId": place.id,
-                "detailsUrl": f"places/{place.id}"
+                "detailsUrl": reverse("places", args=(place.id,))
             }
         })
 
