@@ -74,7 +74,7 @@ def show_maps(request):
 def post_detail(request, id):
     place = get_object_or_404(Place, id=id)
 
-    response = {
+    detiles = {
         "title": place.title,
         "imgs": [image.image.url for image in place.images.all()],
         "description_short": place.description_short,
@@ -86,7 +86,7 @@ def post_detail(request, id):
     }
 
     response = JsonResponse(
-        response,
+        detiles,
         safe=False,
         json_dumps_params={
             'ensure_ascii': False,
