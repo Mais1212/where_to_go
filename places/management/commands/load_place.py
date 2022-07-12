@@ -27,11 +27,13 @@ class Command(BaseCommand):
 
         image_urls = response['imgs']
         place = Place.objects.get_or_create(
-            title=response['title'],
-            description_short=response['description_short'],
-            description_long=response['description_long'],
             latitude=response['coordinates']['lat'],
             longitude=response['coordinates']['lng'],
+            defaults={
+                'title': response['title'],
+                'description_short': response['description_short'],
+                'description_long': response['description_long']
+            },
         )
         for count, image_url in enumerate(image_urls):
             response = requests.get(image_url)
