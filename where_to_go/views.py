@@ -66,9 +66,9 @@ def show_maps(request):
     geo_json["features"].extend(data_base_json)
     geo_json["features"].extend(local_json)
 
-    data = {"GeoJSON": geo_json}
+    context = {"GeoJSON": geo_json}
 
-    return render(request, "index.html", context=data)
+    return render(request, "index.html", context=context)
 
 
 def post_detail(request, id):
