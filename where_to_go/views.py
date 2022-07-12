@@ -8,9 +8,10 @@ from django.urls import reverse
 from places.models import Place
 
 
-def append_json_local(geo_json):
+def load_local_json():
     folder_path = os.path.join("static_src", "places\\")
     fiels = os.listdir(folder_path)
+    features = []
 
     for file in fiels:
         file_path = f"{folder_path}{file}"
@@ -18,7 +19,7 @@ def append_json_local(geo_json):
             file = json.load(file)
             file_id = f"{file['title']}.json"
 
-            geo_json["features"].append({
+            features.append({
                 "type": "Feature",
                 "geometry": {
                     "type": "Point",
@@ -31,14 +32,15 @@ def append_json_local(geo_json):
                 }
             })
 
-    return geo_json
+    return features
 
 
-def append_json_db(geo_json):
+def load_data_base_json():
     places = Place.objects.all()
+    features = []
 
     for place in places:
-        geo_json["features"].append({
+        features.append({
             "type": "Feature",
             "geometry": {
                     "type": "Point",
@@ -51,7 +53,7 @@ def append_json_db(geo_json):
             }
         })
 
-    return geo_json
+    return features
 
 
 def show_maps(request):
@@ -59,8 +61,10 @@ def show_maps(request):
         "type": "FeatureCollection",
         "features": []
     }
-    append_json_db(geo_json)
-    append_json_local(geo_json)
+    data_base_json = load_data_base_json()
+    local_json = load_local_json()
+    geo_json["features"].extend(data_base_json)
+    geo_json["features"].extend(local_json)
 
     data = {"GeoJSON": geo_json}
 
