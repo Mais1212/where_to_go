@@ -14,7 +14,17 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        response = requests.get(options['json_url']).json()
+        try:
+            response = requests.get(options['json_url'])
+            response.raise_for_status()
+            response = response.json()
+        except requests.exceptions.InvalidSchema or requests.exceptions.MissingSchema:
+            print("Кажется, вы ошиблись ссылкой.")
+            exit()
+        except requests.exceptions.HTTPError:
+            print("Сервер не отвечает.")
+            exit()
+
         image_urls = response['imgs']
         place = Place.objects.get_or_create(
             title=response['title'],
