@@ -1,8 +1,8 @@
 import json
 import os
 
-from django.http import Http404, JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
 from django.templatetags.static import static
 from django.urls import reverse
 from places.models import Place
@@ -72,10 +72,7 @@ def show_maps(request):
 
 
 def post_detail(request, id):
-    try:
-        place = Place.objects.get(id=id)
-    except Place.DoesNotExist:
-        raise Http404("No MyModel matches the given query.")
+    place = get_object_or_404(Place, id=id)
 
     response = {
         "title": place.title,

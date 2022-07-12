@@ -18,13 +18,11 @@ class Place(models.Model):
     longitude = models.FloatField(verbose_name="Долгота")
     order = models.PositiveSmallIntegerField(
         default=0,
-        blank=False,
-        null=False,
         verbose_name="Позиция",
     )
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 
     class Meta():
         ordering = ['order']
@@ -46,13 +44,11 @@ class Image(models.Model):
 
     order = models.PositiveSmallIntegerField(
         default=0,
-        blank=False,
-        null=False,
         verbose_name="Позиция",
     )
 
     def __str__(self) -> str:
-        return f"{self.place.title}"
+        return self.place.title
 
     class Meta():
         ordering = ['order']
