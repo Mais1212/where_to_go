@@ -1,3 +1,4 @@
+from pprint import pprint
 import requests
 from django.core.management.base import BaseCommand
 from places.models import Place, Image
@@ -26,7 +27,7 @@ class Command(BaseCommand):
             exit()
 
         image_urls = response['imgs']
-        place = Place.objects.get_or_create(
+        place, __ = Place.objects.get_or_create(
             latitude=response['coordinates']['lat'],
             longitude=response['coordinates']['lng'],
             defaults={
@@ -35,11 +36,12 @@ class Command(BaseCommand):
                 'description_long': response['description_long']
             },
         )
+
         for count, image_url in enumerate(image_urls):
             response = requests.get(image_url)
-            image_name = f'{place[0].title}_{count}.jpg'
+            image_name = f'{place.title}_{count}.jpg'
             image = Image.objects.create(
-                place=Place.objects.get(id=place[0].id),
+                place=Place.objects.get(id=place.id),
             )
             file = ContentFile(response.content)
             image.image.save(image_name, file, save=True)
