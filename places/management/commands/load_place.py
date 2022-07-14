@@ -40,7 +40,7 @@ class Command(BaseCommand):
 
         for count, image_url in enumerate(image_urls):
             try:
-                response = requests.get("https://httpstat.us/404")
+                response = requests.get(image_url)
                 response.raise_for_status()
             except requests.exceptions.HTTPError as exception:
                 print('Ошибка в json файле.')
