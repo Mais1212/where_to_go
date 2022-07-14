@@ -10,27 +10,27 @@ from places.models import Place
 
 def load_local_json():
     folder_path = os.path.join("static_src", "places\\")
-    fiels = os.listdir(folder_path)
+    file_names = os.listdir(folder_path)
     features = []
 
-    for file in fiels:
-        file_path = f"{folder_path}{file}"
-        with open(file_path, "r", encoding="utf-8") as file:
-            file = json.load(file)
-            file_id = f"{file['title']}.json"
+    for file_name in file_names:
+        file_path = f"{folder_path}{file_name}"
+        with open(file_path, "r", encoding="utf-8") as file_content:
+            file_content = json.load(file_content)
+        file_id = f"{file_content['title']}.json"
 
-            features.append({
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [file["coordinates"]["lng"], file["coordinates"]["lat"]]
-                },
-                "properties": {
-                    "title": file["title"],
-                    "placeId": file["title"],
-                    "detailsUrl": static(reverse("places", args=(file_id, )))
-                }
-            })
+        features.append({
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [file_content["coordinates"]["lng"], file_content["coordinates"]["lat"]]
+            },
+            "properties": {
+                "title": file_content["title"],
+                "placeId": file_content["title"],
+                "detailsUrl": static(reverse("places", args=(file_id, )))
+            }
+        })
 
     return features
 
