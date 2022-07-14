@@ -2,6 +2,7 @@ import json
 import os
 
 from django.http import JsonResponse
+from django.conf import settings
 from django.shortcuts import get_object_or_404, render
 from django.templatetags.static import static
 from django.urls import reverse
@@ -9,7 +10,7 @@ from places.models import Place
 
 
 def load_local_json():
-    folder_path = os.path.join("static_src", "places\\")
+    folder_path = os.path.join(settings.BASE_DIR, "static_src", "places", "")
     file_names = os.listdir(folder_path)
     features = []
 
