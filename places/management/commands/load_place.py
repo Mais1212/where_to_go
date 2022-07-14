@@ -19,11 +19,12 @@ class Command(BaseCommand):
             response = requests.get(options['json_url'])
             response.raise_for_status()
             response = response.json()
-        except requests.exceptions.InvalidSchema or requests.exceptions.MissingSchema:
-            print("Кажется, вы ошиблись ссылкой.")
-            exit()
-        except requests.exceptions.HTTPError:
+        except requests.exceptions.HTTPError as exception:
             print("Сервер не отвечает.")
+            print(exception)
+            exit()
+        except requests.exceptions.InvalidSchema or requests.exceptions.MissingSchema as exception:
+            print("Кажется, вы ошиблись ссылкой.")
             exit()
 
         image_urls = response['imgs']
@@ -38,7 +39,13 @@ class Command(BaseCommand):
         )
 
         for count, image_url in enumerate(image_urls):
-            response = requests.get(image_url)
+            try:
+                response = requests.get("https://httpstat.us/404")
+                response.raise_for_status()
+            except requests.exceptions.HTTPError as exception:
+                print('Ошибка в json файле.')
+                print(exception)
+                exit()
             image_name = f'{place.title}_{count}.jpg'
             image = Image.objects.create(
                 place=Place.objects.get(id=place.id),
